@@ -1,0 +1,10 @@
+name: Front left drive motor
+description: FIRST CIM Motor (M4-R0062-12)
+type: 0
+nominal_voltage: 12
+stall_torque: 2.424
+no_load_rpm: 5310
+stall_current: 133
+no_load_current: 2.7
+peak_eff_rpm: 4614
+peak_eff_current: 19.8
