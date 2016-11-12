@@ -1,0 +1,10 @@
+Name: Example Motor
+ID: 0
+Description: IG52-04 1:81
+Output Type: 0
+Feedback Type: 0
+Angular/Linear Ratio: 5
+Conversion Factor: 100
+Maximum Current: 10
+Maximum Voltage: 30
+Torque/Current Ratio: 100

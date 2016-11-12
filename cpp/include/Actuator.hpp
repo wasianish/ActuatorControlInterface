@@ -1,41 +1,34 @@
-/*
- * Actuator.hpp
- *
- *  Created on: Jul 16, 2016
- *      Author: anno
- */
+#ifndef ACTUATOR_HPP
+#define ACTUATOR_HPP
 
-#ifndef ACTUATOR_HPP_
-#define ACTUATOR_HPP_
-
+#include <vector>
 #include <string>
+#include <chrono>
 
 namespace aci {
 
-enum ActuatorType {
-	Motor_DC = 0,
-	Motor_AC = 1,
-	Motor_Stepper = 2,
-	Motor_Servo = 3,
-	Actuator = 4,
-	Other = 5
-};
-
-class Actuator {
-public:
-	std::string name;
-	std::string description;
-	ActuatorType type;
-	double nominal_voltage;
-	double stall_torque;
-	double no_load_rpm;
-	double stall_current;
-	double no_load_current;
-	double peak_eff_rpm;
-	double peak_eff_current;
-
-
-};
+struct ActuatorDataRT {
+	double volt, amp, linvel, linpos, angvel, angpos, torque, force, powerM, powerE, efficiency;
+	std::chrono::high_resolution_clock::time_point timestamp;
 }
 
-#endif /* ACTUATOR_HPP_ */
+enum OutputType { OutSpeed, OutPos, OutBin };
+enum FeedbackType { FBAngvel, FBAngpos, FBLinvel, FBLinpos };
+
+class Actuator {
+	private:
+		std::string name, description;
+		uint8_t id;
+		double fbConv, anglinConv, maxCurrent, tfcRatio, tfcOffset;
+		bool tf;
+		std::vector<ActuatorDataRT> data;
+		OutputType outType;
+		FeedbackType fbType;
+	public:
+		double update(double volt, double amp, double fb);
+		ActuatorDataRT getState();
+		Actuator(std::string file);
+		~Actuator();
+}
+
+}
